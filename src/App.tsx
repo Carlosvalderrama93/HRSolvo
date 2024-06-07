@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import extractTextFromPage from "./extracText";
+import copyToClipboard from "./copyToClipboard";
 
 const App: React.FC = function () {
   const [output, setOutput] = useState<string>("");
@@ -26,26 +27,6 @@ const App: React.FC = function () {
         );
       }
     });
-  }
-
-  function copyToClipboard(data: Record<string, string>) {
-    const textToCopy = `
-      ${data.vacancyInfo}
-      
-      ${data.yearsOfExperience}
-      
-      ${data.educationInfo}
-
-      ${data.name}
-      ${data.email}
-      ${data.whatsapp}
-`;
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => console.log("Text copied to clipboard"))
-      .catch((error) =>
-        console.error("Could not copy text to clipboard:", error)
-      );
   }
 
   return (

@@ -1,25 +1,56 @@
 export default function extractTextFromPage(): Record<string, string> {
+  // User name
   const name =
     document.querySelector(".font-3xl.lh-120.fw-600.text-capitalize")
       ?.textContent || "";
+
+  // Email address
   const email = (
     document.querySelector('a[href^="mailto:"]')?.textContent || ""
   )
     .replace(/\n+/g, "")
     .trim();
+
+  //Contact number
   const whatsappFullText =
     document.querySelector(".js_WhatsappLink")?.textContent || "";
   const whatsappCountryCode = (whatsappFullText.match(/^\+?\d{1,3}/) || [
     "",
   ])[0];
   const whatsappNumber = whatsappFullText.replace(/^\+?\d{1,3}-/, "").trim();
-  const address =
-    document.querySelector(".my-10 .icon-container + div span")?.textContent ||
-    "";
 
+  // city
+  const address =
+    document.querySelector(".my-10 .d-flex span")?.textContent || "";
+
+  const city = address
+    .trim()
+    .split(/\s+|,|\./)
+    .filter(Boolean);
+
+  // Vacancy or position published
   const vacancyInfoElement = document.querySelector(".secondary-bar-title");
   const vacancyInfo = vacancyInfoElement?.textContent?.trim() || "";
   const vacancyInfoTruncated = vacancyInfo.split("Bilingual")[0] + "Bilingual"; // Keep only text before "Bilingual"
+
+  // Languages
+  const languagesEl = document.querySelectorAll(".js_tagText.text-break-word");
+
+  // Utilizar reduce para filtrar y almacenar los textos que contienen "Inglés"
+  const languages = Array.from(languagesEl).reduce<string[]>((acc, crr) => {
+    if (
+      typeof crr.textContent === "string" &&
+      crr.textContent.includes("Inglés")
+    ) {
+      acc.push(crr.textContent.trim());
+    }
+    return acc;
+  }, []);
+
+  // Convertir el array resultante en una cadena de texto separada por " - "
+  const languagesString = languages.join(" - ");
+
+  console.log(languagesString);
 
   // Extracting job experiences
   const jobExperienceElements = document.querySelectorAll(
@@ -63,6 +94,8 @@ export default function extractTextFromPage(): Record<string, string> {
       const cleanedStudyTitle = studyTitle
         .replace("Carrera Profesional", "")
         .replace("Carrera técnica", "")
+        .replace("Postgrado /", "")
+        .replace("Universidad /", "")
         .replace(/\s+/g, " ")
         .replace(":", "")
         .trim();
@@ -71,15 +104,23 @@ export default function extractTextFromPage(): Record<string, string> {
     }
   );
 
-  const educationAsString = educationInfo.join("; ");
+  const educationAsString = educationInfo.reverse().join("\n");
+  const salary =
+    document.querySelector("#Salary span")?.textContent?.trim() || "$$$?";
+  // const salaryText = document.querySelector("#Salary span")?.textContent?.trim().replace(/\./g, "") || "$$$?";
 
   return {
+    languages: languagesString,
     name,
     email,
     whatsapp: `${whatsappCountryCode} ${whatsappNumber}`,
-    address,
-    vacancyInfo: `Pandape - ${vacancyInfoTruncated}`,
+    address: city[city.length - 1],
+    vacancyInfo: `Pandape - ${vacancyInfoTruncated} - $ ${salary} COP (${salary.replace(
+      /\./g,
+      ""
+    )})`,
     yearsOfExperience: experiencesAsString,
     educationInfo: educationAsString,
+    salary,
   };
 }
