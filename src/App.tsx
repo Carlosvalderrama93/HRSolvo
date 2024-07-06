@@ -1,40 +1,18 @@
-import React, { useState, useEffect } from "react";
-import extractTextFromPage from "./extracText";
-import copyToClipboard from "./copyToClipboard";
+import getCandidateData from "./features/getData";
+import { useCandidatesStore } from "./zustand/candidatesStore";
 
-const App: React.FC = function () {
-  const [output, setOutput] = useState<string>("");
+function App() {
+  const { candidates } = useCandidatesStore();
 
-  useEffect(() => {
-    handleExtractText();
-  }, []);
-
-  function handleExtractText() {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      if (tabs[0]?.id) {
-        chrome.scripting.executeScript(
-          {
-            target: { tabId: tabs[0].id },
-            func: extractTextFromPage,
-          },
-          function (results) {
-            if (results && results[0] && results[0].result) {
-              const output = results[0].result;
-              setOutput(JSON.stringify(output, null, 2));
-              copyToClipboard(output);
-            }
-          }
-        );
-      }
-    });
-  }
+  getCandidateData();
 
   return (
     <div>
-      <h1>Text Extractor</h1>
-      <pre>{output}</pre>
+      <h1>Candidate profile</h1>
+      <button onClick={getCandidateData}>Get Data</button>
+      <div>{candidates.length ? candidates[0].name : "NADA"}</div>
     </div>
   );
-};
+}
 
 export default App;

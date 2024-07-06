@@ -1,5 +1,18 @@
-export default function copyToClipboard(data: Record<string, string>) {
+type Xyz = {
+  languages: string;
+  name: string;
+  email: string;
+  whatsapp: string;
+  address: string;
+  vacancyInfo: string;
+  yearsOfExperience: string;
+  educationInfo: string;
+  salary: string;
+  url?: string;
+};
+export default function copyToClipboard(data: Xyz) {
   const textToCopy = `
+  ${data.url}
 ${data.vacancyInfo}
 
 ${data.languages}

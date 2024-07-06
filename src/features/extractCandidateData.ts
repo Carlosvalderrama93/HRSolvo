@@ -1,4 +1,6 @@
-export default function extractTextFromPage(): Record<string, string> {
+import type { Candidate } from "../zustand/candidatesStore";
+
+export default function extractCandidateData(): Candidate {
   // User name
   const name =
     document.querySelector(".font-3xl.lh-120.fw-600.text-capitalize")
