@@ -7,6 +7,7 @@ type CandidateData = {
   yearsOfExperience: string;
   salary: string;
   vacancyInfo: string;
+  address: string;
 };
 
 type CandidateProps = {
@@ -51,7 +52,7 @@ function CandidateCard({ candidateData, onUpdateCandidate }: CandidateProps) {
 
         <div>
           <label>
-            <strong>WhatsApp:</strong>{" "}
+            <strong>cell:</strong>{" "}
             <input
               type="text"
               name="whatsapp"
@@ -63,13 +64,24 @@ function CandidateCard({ candidateData, onUpdateCandidate }: CandidateProps) {
 
         <div>
           <label>
-            <strong>Education:</strong>{" "}
-            <textarea
-              name="educationInfo"
-              value={candidateData.educationInfo}
+            <strong>Salary:</strong>{" "}
+            <input
+              type="text"
+              name="salary"
+              value={candidateData.salary}
               onChange={handleChange}
-              rows={4}
-              cols={50}
+            />
+          </label>
+        </div>
+
+        <div>
+          <label>
+            <strong>Address:</strong>{" "}
+            <input
+              type="text"
+              name="salary"
+              value={candidateData.address}
+              onChange={handleChange}
             />
           </label>
         </div>
@@ -88,34 +100,35 @@ function CandidateCard({ candidateData, onUpdateCandidate }: CandidateProps) {
 
         <div>
           <label>
-            <strong>Experience:</strong>{" "}
+            <strong>Position applied:</strong>{" "}
             <input
               type="text"
+              name="vacancyInfo"
+              value={candidateData.vacancyInfo}
+              onChange={handleChange}
+            />
+          </label>
+        </div>
+
+        <div>
+          <label>
+            <strong>Experience:</strong>{" "}
+            <textarea
               name="yearsOfExperience"
               value={candidateData.yearsOfExperience}
               onChange={handleChange}
+              rows={4}
+              cols={50}
             />
           </label>
         </div>
 
         <div>
           <label>
-            <strong>Salary expectation:</strong>{" "}
-            <input
-              type="text"
-              name="salary"
-              value={candidateData.salary}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-
-        <div>
-          <label>
-            <strong>Position applied:</strong>{" "}
+            <strong>Education:</strong>{" "}
             <textarea
-              name="vacancyInfo"
-              value={candidateData.vacancyInfo}
+              name="educationInfo"
+              value={candidateData.educationInfo}
               onChange={handleChange}
               rows={4}
               cols={50}

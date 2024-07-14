@@ -1,4 +1,4 @@
-import { removeDuplicates } from "./educationalExtractor";
+import { removeDuplicates } from "./educationExtractor";
 
 // Función para extraer y formatear números de teléfono de elementos HTML
 export default function cellphoneExtractor(): string {

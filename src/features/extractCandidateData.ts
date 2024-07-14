@@ -1,11 +1,14 @@
+import candidateNameExtractor from "../dataExtractors/candidateNameExtractor";
 import type { Candidate } from "../zustand/candidatesStore";
 
 export default function extractCandidateData(): Candidate {
   // User name
-  const name =
-    document.querySelector(".font-3xl.lh-120.fw-600.text-capitalize")
-      ?.textContent || "";
 
+  // const name =
+  //   document.querySelector(".font-3xl.lh-120.fw-600.text-capitalize")
+  //     ?.textContent || "";
+
+  const name = candidateNameExtractor();
   // Email address
   const email = (
     document.querySelector('a[href^="mailto:"]')?.textContent || ""
@@ -51,9 +54,6 @@ export default function extractCandidateData(): Candidate {
 
   // Convertir el array resultante en una cadena de texto separada por " - "
   const languagesString = languages.join(" - ");
-
-  console.log(languagesString);
-
   // Extracting job experiences
   const jobExperienceElements = document.querySelectorAll(
     "#ResumeExperiences .row.no-gutters.mb-20.js_aggregateContainer"
