@@ -7,24 +7,17 @@ import copyToClipboard from "./features/copyToClipboard";
 
 function App() {
   const [checkCandidate, setCheckCandidate] = useState(true);
-  const [copyCandidate, setCopyCandidate] = useState<boolean>(false);
-  const { addCandidate, getLastCandidate } = useCandidatesStore();
+  const { addCandidate, lastCandidate } = useCandidatesStore();
 
   useEffect(() => {
     if (checkCandidate) {
       const queryInfo = { active: true, currentWindow: true };
       chrome.tabs.query(queryInfo, (tabs) => getRawCandidate(tabs));
+      setCheckCandidate(false);
     }
 
-    if (copyCandidate) copyToClipboard(getLastCandidate());
-
-    setCheckCandidate(false);
-    setCopyCandidate(false);
-  }, [checkCandidate, copyCandidate]);
-
-  function handlerClick() {
-    setCheckCandidate(true);
-  }
+    if (lastCandidate) copyToClipboard(lastCandidate);
+  }, [checkCandidate, lastCandidate]);
 
   function getRawCandidate(tabs: chrome.tabs.Tab[]) {
     if (!tabs[0]?.id) return console.log("Not Tab ID");
@@ -42,11 +35,7 @@ function App() {
   return (
     <div>
       <h1>Candidate profile</h1>
-      {<CandidateFormContainer />}
-      <button onClick={handlerClick}>Get candidate data</button>
-      <button onClick={() => setCopyCandidate(!copyCandidate)}>
-        Copy Data
-      </button>
+      {<CandidateFormContainer setCheckCandidate={setCheckCandidate} />}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import CandidateCards from "./CandidateCards"; // Asegúrate de ajustar la ruta al componente
 import { useCandidatesStore } from "../store/candidatesStore";
+import copyToClipboard from "../features/copyToClipboard";
 
-// Interfaz para los datos del candidato
 interface CandidateData {
   name: string;
   email: string;
@@ -11,25 +11,34 @@ interface CandidateData {
   yearsOfExperience: string;
   salary: string;
   vacancyInfo: string;
-  // Puedes añadir más propiedades según sea necesario
 }
 
-// Componente Padre en TypeScript
-function CandidateFormContainer() {
-  const { candidates, updateCandidate } = useCandidatesStore();
+function CandidateFormContainer({
+  setCheckCandidate,
+}: {
+  setCheckCandidate: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  const { lastCandidate, updateCandidate } = useCandidatesStore();
 
-  // Función para manejar la actualización de datos del candidato
   function onUpdateCandidate(updatedData: Partial<CandidateData>) {
     updateCandidate(0, updatedData);
   }
 
-  if (candidates.length) {
+  if (lastCandidate) {
     return (
       <div>
         <CandidateCards
-          candidateData={candidates[candidates.length - 1]}
+          candidateData={lastCandidate}
           onUpdateCandidate={onUpdateCandidate}
         />
+        <button onClick={() => setCheckCandidate(true)}>Get candidate</button>
+        <button
+          onClick={() => {
+            copyToClipboard(lastCandidate);
+          }}
+        >
+          Copy Data
+        </button>
       </div>
     );
   }

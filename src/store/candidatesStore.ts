@@ -15,19 +15,20 @@ export type Candidate = {
 
 type CandidateState = {
   candidates: Candidate[];
+  lastCandidate: Candidate | undefined;
   addCandidate: (candidate: Candidate) => void;
   removeCandidate: (index: number) => void;
   updateCandidate: (index: number, candidate: Partial<Candidate>) => void;
-  getLastCandidate: () => Candidate | undefined;
 };
 
-export const useCandidatesStore = create<CandidateState>((set, get) => ({
+export const useCandidatesStore = create<CandidateState>((set) => ({
   candidates: [],
-  addCandidate: (candidate: Candidate) => {
+  lastCandidate: undefined,
+  addCandidate: (candidate: Candidate) =>
     set((state) => ({
       candidates: [...state.candidates, candidate],
-    }));
-  },
+      lastCandidate: candidate,
+    })),
   removeCandidate: (index) =>
     set((state) => ({
       candidates: state.candidates.filter((_, i) => i !== index),
@@ -38,10 +39,4 @@ export const useCandidatesStore = create<CandidateState>((set, get) => ({
         i === index ? { ...c, ...candidate } : c
       ),
     })),
-  getLastCandidate: () => {
-    const { candidates } = get(); // Access state using `get`
-    return candidates.length > 0
-      ? candidates[candidates.length - 1]
-      : undefined;
-  },
 }));
