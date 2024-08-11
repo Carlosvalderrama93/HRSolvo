@@ -1,8 +1,8 @@
 import { removeDuplicates } from "./educationExtractor";
 
 // Función para extraer y formatear números de teléfono de elementos HTML
-export default function cellphoneExtractor(): string {
-  const phoneElements = document.querySelectorAll(".js_WhatsappLink");
+export default function cellphoneExtractor(docu: Document): string {
+  const phoneElements = docu.querySelectorAll(".js_WhatsappLink");
 
   if (!phoneElements.length) return "+57 ";
 

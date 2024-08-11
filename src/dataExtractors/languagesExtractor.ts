@@ -1,5 +1,5 @@
-export default function languagesExtractor() {
-  const languagesEl = document.querySelectorAll(
+export default function languagesExtractor(docu: Document) {
+  const languagesEl = docu.querySelectorAll(
     "#ResumeLanguagesContainer div div div .js_tagText.lh-100.text-break-word "
   );
   const languagesList = Array.from(languagesEl).reduce<string[]>((acc, crr) => {

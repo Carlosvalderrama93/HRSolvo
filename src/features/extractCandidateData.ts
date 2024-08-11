@@ -1,5 +1,4 @@
-import candidateNameExtractor from "../dataExtractors/candidateNameExtractor";
-import type { Candidate } from "../zustand/candidatesStore";
+import type { Candidate } from "../store/candidatesStore";
 
 export default function extractCandidateData(): Candidate {
   // User name
@@ -8,7 +7,10 @@ export default function extractCandidateData(): Candidate {
   //   document.querySelector(".font-3xl.lh-120.fw-600.text-capitalize")
   //     ?.textContent || "";
 
-  const name = candidateNameExtractor();
+  const name =
+    document
+      .querySelector("#HeaderInfoContainer .match-name.mt-0.d-flex div")
+      ?.textContent?.trim() ?? "Candidate name:";
   // Email address
   const email = (
     document.querySelector('a[href^="mailto:"]')?.textContent || ""
@@ -34,7 +36,7 @@ export default function extractCandidateData(): Candidate {
     .filter(Boolean);
 
   // Vacancy or position published
-  const vacancyInfoElement = document.querySelector(".secondary-bar-title");
+  const vacancyInfoElement = document.querySelector(".lh-140");
   const vacancyInfo = vacancyInfoElement?.textContent?.trim() || "";
   const vacancyInfoTruncated = vacancyInfo.split("Bilingual")[0] + "Bilingual"; // Keep only text before "Bilingual"
 
@@ -111,7 +113,7 @@ export default function extractCandidateData(): Candidate {
     document.querySelector("#Salary span")?.textContent?.trim() || "$$$?";
   // const salaryText = document.querySelector("#Salary span")?.textContent?.trim().replace(/\./g, "") || "$$$?";
 
-  return {
+  const candidate = {
     languages: languagesString,
     name,
     email,
@@ -125,4 +127,6 @@ export default function extractCandidateData(): Candidate {
     educationInfo: educationAsString,
     salary,
   };
+
+  return candidate;
 }

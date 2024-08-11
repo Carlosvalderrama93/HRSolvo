@@ -1,5 +1,5 @@
 import CandidateCards from "./CandidateCards"; // Asegúrate de ajustar la ruta al componente
-import { useCandidatesStore } from "../zustand/candidatesStore";
+import { useCandidatesStore } from "../store/candidatesStore";
 
 // Interfaz para los datos del candidato
 interface CandidateData {

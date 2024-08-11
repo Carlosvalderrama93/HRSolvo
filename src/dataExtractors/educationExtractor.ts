@@ -1,5 +1,5 @@
-export default function educationExtractor() {
-  const educationElements = document.querySelectorAll(
+export default function educationExtractor(docu: Document) {
+  const educationElements = docu.querySelectorAll(
     "#ResumeStudies .row.no-gutters.mb-20.js_aggregateContainer"
   );
 

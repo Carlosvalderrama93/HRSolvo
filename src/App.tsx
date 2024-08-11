@@ -1,13 +1,29 @@
+import { useEffect, useState } from "react";
 import CandidateFormContainer from "./components/CandidateFormContainer";
+
 import extractCandidateData from "./features/extractCandidateData";
-import { useCandidatesStore, type Candidate } from "./zustand/candidatesStore";
+import { useCandidatesStore, type Candidate } from "./store/candidatesStore";
+import copyToClipboard from "./features/copyToClipboard";
 
 function App() {
-  const { addCandidate } = useCandidatesStore();
+  const [checkCandidate, setCheckCandidate] = useState(true);
+  const [copyCandidate, setCopyCandidate] = useState<boolean>(false);
+  const { addCandidate, getLastCandidate } = useCandidatesStore();
+
+  useEffect(() => {
+    if (checkCandidate) {
+      const queryInfo = { active: true, currentWindow: true };
+      chrome.tabs.query(queryInfo, (tabs) => getRawCandidate(tabs));
+    }
+
+    if (copyCandidate) copyToClipboard(getLastCandidate());
+
+    setCheckCandidate(false);
+    setCopyCandidate(false);
+  }, [checkCandidate, copyCandidate]);
 
   function handlerClick() {
-    const queryInfo = { active: true, currentWindow: true };
-    chrome.tabs.query(queryInfo, (tabs) => getRawCandidate(tabs));
+    setCheckCandidate(true);
   }
 
   function getRawCandidate(tabs: chrome.tabs.Tab[]) {
@@ -26,8 +42,11 @@ function App() {
   return (
     <div>
       <h1>Candidate profile</h1>
-      <button onClick={handlerClick}>Get candidate data</button>
       {<CandidateFormContainer />}
+      <button onClick={handlerClick}>Get candidate data</button>
+      <button onClick={() => setCopyCandidate(!copyCandidate)}>
+        Copy Data
+      </button>
     </div>
   );
 }

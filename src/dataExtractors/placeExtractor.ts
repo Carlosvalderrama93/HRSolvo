@@ -1,7 +1,6 @@
-export default function placeExtractor() {
+export default function placeExtractor(docu: Document) {
   const address =
-    document.querySelector(".js_CandidateAddress")?.textContent ||
-    "city not found";
+    docu.querySelector(".js_CandidateAddress")?.textContent || "city not found";
 
   const city = address
     .trim()

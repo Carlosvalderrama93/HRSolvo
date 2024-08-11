@@ -1,35 +1,27 @@
-type Xyz = {
-  languages: string;
-  name: string;
-  email: string;
-  whatsapp: string;
-  address: string;
-  vacancyInfo: string;
-  yearsOfExperience: string;
-  educationInfo: string;
-  salary: string;
-  url?: string;
-};
-export default function copyToClipboard(data: Xyz) {
-  const textToCopy = `
-  ${data.url}
-${data.vacancyInfo}
+import { type Candidate } from "../store/candidatesStore";
 
-${data.languages}
+export default function copyToClipboard(candidate: Candidate | undefined) {
+  if (!candidate) return "Not candidate";
+  console.log("vacancy", candidate.vacancyInfo);
+
+  const candidateCopy = `
+${candidate.name}
+${candidate.email}
+${candidate.whatsapp}
+${candidate.address}, Colombia
 
 
-${data.educationInfo}
+${candidate.vacancyInfo}
 
+${candidate.languages}
 
-${data.yearsOfExperience}
+${candidate.educationInfo}
 
-${data.name}
-${data.email}
-${data.whatsapp}
-${data.address}, Colombia
-`;
+${candidate.yearsOfExperience}
+${candidate.url}  
+  `;
   navigator.clipboard
-    .writeText(textToCopy)
+    .writeText(candidateCopy)
     .then(() => console.log("Text copied to clipboard"))
     .catch((error) =>
       console.error("Could not copy text to clipboard:", error)

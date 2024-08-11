@@ -1,5 +1,5 @@
-export default function workExperienceExtractor() {
-  const experienceElements = document.querySelectorAll(
+export default function workExperienceExtractor(docu: Document) {
+  const experienceElements = docu.querySelectorAll(
     "#ResumeExperiences .row.no-gutters.mb-20.js_aggregateContainer"
   );
 

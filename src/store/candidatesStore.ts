@@ -18,9 +18,10 @@ type CandidateState = {
   addCandidate: (candidate: Candidate) => void;
   removeCandidate: (index: number) => void;
   updateCandidate: (index: number, candidate: Partial<Candidate>) => void;
+  getLastCandidate: () => Candidate | undefined;
 };
 
-export const useCandidatesStore = create<CandidateState>((set) => ({
+export const useCandidatesStore = create<CandidateState>((set, get) => ({
   candidates: [],
   addCandidate: (candidate: Candidate) => {
     set((state) => ({
@@ -37,4 +38,10 @@ export const useCandidatesStore = create<CandidateState>((set) => ({
         i === index ? { ...c, ...candidate } : c
       ),
     })),
+  getLastCandidate: () => {
+    const { candidates } = get(); // Access state using `get`
+    return candidates.length > 0
+      ? candidates[candidates.length - 1]
+      : undefined;
+  },
 }));
