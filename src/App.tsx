@@ -10,12 +10,9 @@ function App() {
   const { addCandidate, lastCandidate } = useCandidatesStore();
 
   useEffect(() => {
-    if (checkCandidate) {
-      const queryInfo = { active: true, currentWindow: true };
-      chrome.tabs.query(queryInfo, (tabs) => getRawCandidate(tabs));
-      setCheckCandidate(false);
-    }
-
+    const queryInfo = { active: true, currentWindow: true };
+    chrome.tabs.query(queryInfo, (tabs) => getRawCandidate(tabs));
+    setCheckCandidate(false);
     if (lastCandidate) copyToClipboard(lastCandidate);
   }, [checkCandidate, lastCandidate]);
 
