@@ -3,7 +3,6 @@ import CandidateFormContainer from "./components/CandidateFormContainer";
 
 import extractCandidateData from "./features/extractCandidateData";
 import { useCandidatesStore, type Candidate } from "./store/candidatesStore";
-import copyToClipboard from "./features/copyToClipboard";
 
 function App() {
   const [checkCandidate, setCheckCandidate] = useState(true);
@@ -13,7 +12,6 @@ function App() {
     const queryInfo = { active: true, currentWindow: true };
     chrome.tabs.query(queryInfo, (tabs) => getRawCandidate(tabs));
     setCheckCandidate(false);
-    if (lastCandidate) copyToClipboard(lastCandidate);
   }, [checkCandidate, lastCandidate]);
 
   function getRawCandidate(tabs: chrome.tabs.Tab[]) {
@@ -38,6 +36,3 @@ function App() {
 }
 
 export default App;
-
-// copyToClipboard(urlAndCandidate);
-// const url = tabs[0].url;
