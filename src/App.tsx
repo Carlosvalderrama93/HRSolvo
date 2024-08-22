@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div>
-      <h1>Candidate profile</h1>
+      <h1 className="underline">Candidate profile</h1>
       {<CandidateFormContainer setCheckCandidate={setCheckCandidate} />}
     </div>
   );
