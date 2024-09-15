@@ -40,3 +40,9 @@ export const useCandidatesStore = create<CandidateState>((set) => ({
       ),
     })),
 }));
+
+
+// posible posición
+// Habilidades
+// Notes
+// Dialog, Dropdown menu, pop over, hover card
