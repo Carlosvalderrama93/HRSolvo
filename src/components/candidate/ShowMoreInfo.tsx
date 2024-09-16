@@ -2,6 +2,7 @@ import type { BasicStructure, ValuesStructure } from "./CandidateProfile";
 
 import AddEditInfo from "./AddEditInfo";
 import MoreOptions from "./MoreOptions";
+import setOrderValues from "@/features/setOrderValues";
 
 type ShowMoreInfoProps = {
   section: BasicStructure;
@@ -29,7 +30,11 @@ export default function ShowMoreInfo({
   return (
     <>
       {section.values.map(({ value1, value2 }, index) => {
-        const finalValue = value2 ? ` ${value1} ${value2}` : value1;
+        const finalValue = setOrderValues({
+          value1,
+          value2,
+          type: section.type,
+        });
         return (
           <div key={index}>
             <div className="flex items-center justify-between" key={index}>
@@ -37,7 +42,7 @@ export default function ShowMoreInfo({
               <MoreOptions
                 index={index}
                 label={section.type}
-                value={{ value1, value2 }}
+                values={{ value1, value2 }}
                 removeValue={removeValue}
                 copyToClipboard={copyToClipboard}
                 handleEditClick={handleEditClick}

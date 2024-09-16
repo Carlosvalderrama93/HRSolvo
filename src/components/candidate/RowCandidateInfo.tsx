@@ -15,10 +15,11 @@ import type {
   UpdateCandidateField,
   ValuesStructure,
 } from "./CandidateProfile";
+import setOrderValues from "@/features/setOrderValues";
 
 // Define a type for the contact information, which can include an optional country code
 
-export default function RawCandidateInfo({
+export default function RowCandidateInfo({
   section,
   updateCandidateField,
   infoType,
@@ -89,10 +90,14 @@ export default function RawCandidateInfo({
     setCountryCode("");
   }
 
+  function capitalizeFirstLetter(text: string): string {
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  }
+
   return (
     <div className="grid grid-cols-[70px_auto_20px] gap-x-3 px-5 items-center">
       <span className="text-sm font-semibold text-foreground caspanitalize">
-        {section.type}
+        {capitalizeFirstLetter(section.type)}
       </span>
       <HoverCard>
         <HoverCardTrigger className="min-w-0 grid gap-y-2">
@@ -119,12 +124,9 @@ export default function RawCandidateInfo({
         onClick={() =>
           copyToClipboard(
             section.values
-              .map(({ value1, value2 }) => {
-                const finalString: string = value2
-                  ? `${value1} ${value2}`
-                  : value1;
-                return finalString;
-              })
+              .map(({ value1, value2 }) =>
+                setOrderValues({ value1, value2, type: section.type })
+              )
               .join(", ")
           )
         }

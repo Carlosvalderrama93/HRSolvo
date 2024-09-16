@@ -1,12 +1,14 @@
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
+import type { ValuesStructure } from "./CandidateProfile";
+import setOrderValues from "@/features/setOrderValues";
 
 type MoreOptionsProps = {
   removeValue: (index: number) => void;
   handleEditClick: (index: number) => void;
   copyToClipboard: (value: string) => void;
   label: string;
-  value: ContactInfo;
+  values: ValuesStructure;
   index: number;
 };
 
@@ -15,24 +17,11 @@ function MoreOptions({
   removeValue,
   handleEditClick,
   label,
-  value,
+  values,
   index,
 }: MoreOptionsProps) {
-  if (value.type === "name")
-    return (
-      <Button
-        variant="ghost"
-        className="w-full text-xs font-semibold"
-        size="icon"
-        onClick={() =>
-          copyToClipboard(
-            `${value.value1}${value.value2 && " " + value.value2}`
-          )
-        }
-      >
-        Copy
-      </Button>
-    );
+  const { value1, value2 } = values;
+
   return (
     <>
       <Popover>
@@ -47,9 +36,7 @@ function MoreOptions({
             className="w-full text-xs font-semibold"
             size="icon"
             onClick={() =>
-              copyToClipboard(
-                `${value.value1}${value.value2 && " " + value.value2}`
-              )
+              copyToClipboard(setOrderValues({ value1, value2, type: label }))
             }
           >
             Copy {label}

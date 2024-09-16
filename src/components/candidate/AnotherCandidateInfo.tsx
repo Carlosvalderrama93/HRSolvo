@@ -1,5 +1,5 @@
 import type { AnotherInfo, UpdateCandidateField } from "./CandidateProfile";
-import RawCandidateInfo from "./RawCandidateInfo";
+import RowCandidateInfo from "./RowCandidateInfo";
 
 export default function AnotherCandidateInfo({
   anotherInfo,
@@ -13,7 +13,7 @@ export default function AnotherCandidateInfo({
       {Object.keys(anotherInfo).map((key, index) => {
         const section = anotherInfo[key as keyof AnotherInfo];
         return (
-          <RawCandidateInfo
+          <RowCandidateInfo
             key={index}
             section={section}
             updateCandidateField={updateCandidateField}
