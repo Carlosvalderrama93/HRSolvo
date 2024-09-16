@@ -24,7 +24,7 @@ export default function AddEditInfo({
   },
   setInputValue,
 }: AddEditInfoProps) {
-  if (section.type === "name") return <></>;
+  if (section.type === "name" && editingIndex === null) return <></>;
   const addCancelButtons: JSX.Element = (
     <div className="mt-2 flex space-x-2">
       {editingIndex !== null && (
