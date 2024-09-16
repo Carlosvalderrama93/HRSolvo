@@ -35,27 +35,30 @@ function MoreOptions({
             variant="ghost"
             className="w-full text-xs font-semibold"
             size="icon"
+            onClick={() => handleEditClick(index)}
+          >
+            Edit {label}
+          </Button>
+          
+          <Button
+            variant="ghost"
+            className="w-full text-xs font-semibold"
+            size="icon"
             onClick={() =>
               copyToClipboard(setOrderValues({ value1, value2, type: label }))
             }
           >
             Copy {label}
           </Button>
+
           <Button
             variant="ghost"
             className="w-full text-xs font-semibold"
             size="icon"
             onClick={() => removeValue(index)}
+            disabled={label === "name" ? true : false}
           >
             Delete {label}
-          </Button>
-          <Button
-            variant="ghost"
-            className="w-full text-xs font-semibold"
-            size="icon"
-            onClick={() => handleEditClick(index)}
-          >
-            Edit {label}
           </Button>
         </PopoverContent>
       </Popover>
