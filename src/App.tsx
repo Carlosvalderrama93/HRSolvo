@@ -3,7 +3,7 @@
 // import CandidateContainer from "./components/CandidateContainer";
 
 import CandidateProfile from "./components/candidate/CandidateProfile";
-
+//
 function App() {
   // const [checkCandidate, setCheckCandidate] = useState(true);
   // const { addCandidate, lastCandidate } = useCandidatesStore();
